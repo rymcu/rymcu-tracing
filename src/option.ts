@@ -1,4 +1,4 @@
-export interface RYTracingOptionArguments {
+export interface RYTracingArguments {
     dsn: string
     appName: string
     appCode: string
@@ -18,7 +18,7 @@ export interface RYTracingOptionArguments {
     extra: any
 }
 
-export class RYTracingOption implements RYTracingOptionArguments {
+export class RYTracingOption implements RYTracingArguments {
     dsn: string = ''
     appName: string = ''
     appCode: string = ''
