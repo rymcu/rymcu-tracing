@@ -19,6 +19,8 @@ export const isWindow = isType('Window')
 export const isFlase = (val: any) => {
     return isBoolean(val) && String(val) === 'false'
 }
+export const isBrowserEnv = isWindow(typeof window !== 'undefined' ? window : 0)
+export const isElectronEnv = !!window?.process?.versions?.electron
 
 export const variableTypeDetection = {
     isNumber: isType('Number'),
