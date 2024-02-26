@@ -2,10 +2,10 @@ import { Base } from './base'
 import { RYTracingArguments, RYTracingOption } from './option'
 
 export type RYTracing = {
-  main: (args: RYTracingArguments) => void
-  event: any
   base: Base
+  event: any
   sender: any
   interseciton: any
-  option: RYTracingOption
+  options: RYTracingOption
+  main: (args: RYTracingArguments) => void
 }

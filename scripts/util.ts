@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path, { join } from 'path'
+import { name, version, repository } from '../package.json'
 
 export function copy(source: string, dist: string) {
   if (!fs.existsSync(source)) {
@@ -69,4 +70,16 @@ export function rmrf(path: string): void {
     })
     fs.rmdirSync(path)
   }
+}
+
+export function flushPackageInfo(module: string) {
+  const path = `dist/${name}/${module}/index.js`
+  if (!fs.existsSync(path)) {
+    throw new Error(`File "${path}" does not exist.`)
+  }
+  let content = fs.readFileSync(path, { encoding: 'utf8' })
+  content = content.replace(/\{\{PACKAGE_NAME\}\}/g, name)
+  content = content.replace(/\{\{PACKAGE_VERSION\}\}/g, version)
+  content = content.replace(/\{\{PACKAGE_REPOSITORY\}\}/g, repository)
+  fs.writeFileSync(path, content, { encoding: 'utf8' })
 }

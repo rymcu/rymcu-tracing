@@ -1,6 +1,6 @@
 import typescript from '@rollup/plugin-typescript'
 import { ModuleFormat, OutputOptions, RollupOptions, rollup } from 'rollup'
-import { copyPackageJSON, rmrf } from './util'
+import { copyPackageJSON, flushPackageInfo, rmrf } from './util'
 import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
@@ -31,22 +31,22 @@ function format(format: ModuleFormat): RollupOptions {
         babelHelpers: 'bundled',
         presets: [
           [
-            "@babel/preset-env",
+            '@babel/preset-env',
             {
-              "useBuiltIns": "usage",
-              "corejs": 3,
-              "targets": {
-                "browsers": [
-                  "last 50 Chrome versions",
-                  "not Chrome < 60",
-                  "last 50 Safari versions",
-                  "not Safari < 10.1",
-                  "last 50 iOS versions",
-                  "not iOS < 10.3",
-                  "last 50 Firefox versions",
-                  "not Firefox < 54",
-                  "last 50 Edge versions",
-                  "not Edge < 8"
+              useBuiltIns: 'usage',
+              corejs: 3,
+              targets: {
+                browsers: [
+                  'last 50 Chrome versions',
+                  'not Chrome < 60',
+                  'last 50 Safari versions',
+                  'not Safari < 10.1',
+                  'last 50 iOS versions',
+                  'not iOS < 10.3',
+                  'last 50 Firefox versions',
+                  'not Firefox < 54',
+                  'last 50 Edge versions',
+                  'not Edge < 8'
                 ]
               }
             }
@@ -73,6 +73,11 @@ async function buildAll() {
   await buildModule('es')
   await buildModule('cjs')
   console.log('build modules finished......')
+  console.log('flush package info to dist index.js...')
+  flushPackageInfo('umd')
+  flushPackageInfo('es')
+  flushPackageInfo('cjs')
+  console.log('flush package info to dist index.js over...')
 }
 
 buildAll().then(() => {
