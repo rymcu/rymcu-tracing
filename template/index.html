@@ -1,0 +1,22 @@
+<!DOCTYPE html5>
+
+<html>
+
+<head>
+    <script>
+        window.onload = function () {
+            var script = document.createElement('script');
+            script.src = "../dist/@rymcu/tracing/umd/index.js";
+            script.onload = function () {
+                console.log(window.RYMCUTracing)
+            }
+            document.head.appendChild(script);
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
