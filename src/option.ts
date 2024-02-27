@@ -21,7 +21,6 @@ export interface RYTracingArguments {
   deviceKey: string
   sessionKey: string
   sessionExpires: number
-  sdkLocalKey: string
   name: string
   repository: string
   version: string
@@ -48,7 +47,6 @@ export class RYTracingOption implements RYTracingArguments {
   deviceKey: string = 'rytracing_device'
   sessionKey: string = 'rytracing_session'
   sessionExpires: number = 30 * 60 * 1000
-  sdkLocalKey: string = ''
   readonly name: string = '{{PACKAGE_NAME}}'
   readonly repository: string = '{{PACKAGE_REPOSITORY}}'
   readonly version: string = '{{PACKAGE_VERSION}}'
