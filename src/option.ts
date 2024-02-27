@@ -19,7 +19,7 @@ export interface RYTracingArguments {
   ignoreRequest: Array<string | RegExp>
   extra: any
   deviceKey: string
-  seesionKey: string
+  sessionKey: string
   sessionExpires: number
   sdkLocalKey: string
   name: string
@@ -45,8 +45,8 @@ export class RYTracingOption implements RYTracingArguments {
   ignoreErrors: (string | RegExp)[] = []
   ignoreRequest: (string | RegExp)[] = []
   extra: any = {}
-  deviceKey: string = ''
-  seesionKey: string = 'rytracing_'
+  deviceKey: string = 'rytracing_device'
+  sessionKey: string = 'rytracing_session'
   sessionExpires: number = 30 * 60 * 1000
   sdkLocalKey: string = ''
   readonly name: string = '{{PACKAGE_NAME}}'

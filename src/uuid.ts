@@ -1,6 +1,6 @@
 import { pad } from './pad'
 
-export function uuid() {
+export function UUID() {
   const date = new Date()
   const hexDate = parseInt(
     `${date.getFullYear()}${pad(date.getMonth() + 1, 2)}${pad(
