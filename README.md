@@ -56,3 +56,7 @@ yarn && yarn build
 </html>
 
 ```
+
+- if you want to publish
+
+after build the dist fold will create `package.json`,then you can change the package.json's name and version, then publish to npm
