@@ -10,18 +10,25 @@ export * from "./ry-tracing.types";
 export * from "./session";
 export * from "./time";
 export * from "./uuid";
-export * from './eventbus'
+export * from "./eventbus";
+export * from "./location";
+export * from "./sender";
+export * from "./pv";
 
 import { initBase } from "./base";
 import { initEventBus } from "./eventbus";
 import { _global } from "./global";
 import { RYTracingArguments, initOptions } from "./option";
+import { initSender } from "./sender";
+import { initPV } from "./pv";
 
 export function run(args: RYTracingArguments) {
   if (_global.__RY_TRACING_INIT__) return;
   initOptions(args);
   initBase();
   initEventBus();
+  initSender();
+  initPV();
   console.log(_global.__RY_TRACING__);
 }
 
