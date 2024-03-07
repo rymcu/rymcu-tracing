@@ -75,7 +75,7 @@ export function initPV(): void {
     callback: () => {
       const durationTime = getTimestamp() - durationStartTime;
       if (Object.values(lastSendObj).length > 0 && durationTime > 100) {
-        sendData.emit({ ...lastSendObj, durationTime }, true);
+        _global.__RY_TRACING__.send("/pv", { ...lastSendObj, durationTime });
       }
     },
   });
@@ -101,12 +101,12 @@ function sendPageView(option: any = {}) {
         action: _action,
         triggerTime: getTimestamp(),
       };
-      sendData.emit(sendObj);
+      _global.__RY_TRACING__.send("/pv", sendObj);
 
       const durationTime = getTimestamp() - durationStartTime;
       durationStartTime = getTimestamp();
       if (Object.values(lastSendObj).length > 0 && durationTime > 100) {
-        sendData.emit({ ...lastSendObj, durationTime });
+        _global.__RY_TRACING__.send("/pv", { ...lastSendObj, durationTime });
       }
       lastSendObj = {
         ...sendObj,

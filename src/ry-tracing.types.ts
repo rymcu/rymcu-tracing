@@ -5,8 +5,7 @@ import { RYTracingArguments, RYTracingOption } from "./option";
 export type RYTracing = {
   base: Base;
   eventbus: EventBus;
-  sender: any;
-  interseciton: any;
+  send: (path: string, param: any) => void;
   options: RYTracingOption;
   main: (args: RYTracingArguments) => void;
 };

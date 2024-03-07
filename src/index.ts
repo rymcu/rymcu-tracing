@@ -29,7 +29,6 @@ export function run(args: RYTracingArguments) {
   initEventBus();
   initSender();
   initPV();
-  console.log(_global.__RY_TRACING__);
 }
 
 _global.__RY_TRACING__.main = run;
