@@ -2,18 +2,22 @@ import { getLocationHref } from "./location";
 import { _global } from "./global";
 import { getTimestamp } from "./time";
 
+export const WEBPAGELOAD: Record<number, string> = {
+  0: "navigate",
+  1: "reload",
+  2: "back_forward",
+  255: "reserved",
+};
+
 let oldURL = getLocationHref();
 let durationStartTime = getTimestamp();
 let lastSendObj: any = {};
 
 export function initPV(): void {
   if (_global.__RY_TRACING__.options.disablePV) return;
-  // 最后一次触发路由变化是否为popState触发
   let lastIsPop = false;
-  // 在触发 replaceState 后 100ms 内的 pushState 会被无效记录
   let repetitionRoute = false;
   const { eventbus } = _global.__RY_TRACING__;
-  // 首次进入记录url变化
   sendPageView({ referer: document.referrer });
 
   eventbus.addEvent({
@@ -52,7 +56,7 @@ export function initPV(): void {
       if (repetitionRoute) return;
       if (_global.location.hash !== "") {
         const oldHost =
-          oldURL.indexOf("#") > 0 // 多页面情况下 history模式刷新还是在pv页面
+          oldURL.indexOf("#") > 0
             ? oldURL.slice(0, oldURL.indexOf("#"))
             : oldURL;
         if (
@@ -75,4 +79,40 @@ export function initPV(): void {
       }
     },
   });
+}
+
+function sendPageView(option: any = {}) {
+  const { referer = oldURL, action, params, title } = option;
+  let _action = action;
+  if (!_action) {
+    _action = WEBPAGELOAD[performance.navigation.type] || "";
+  }
+
+  setTimeout(
+    () => {
+      oldURL = getLocationHref();
+      const sendObj = {
+        eventType: "pv",
+        eventId: _global.__RY_TRACING__.base.pageId,
+        triggerPageUrl: getLocationHref(),
+        referer,
+        params,
+        title: title || document.title,
+        action: _action,
+        triggerTime: getTimestamp(),
+      };
+      sendData.emit(sendObj);
+
+      const durationTime = getTimestamp() - durationStartTime;
+      durationStartTime = getTimestamp();
+      if (Object.values(lastSendObj).length > 0 && durationTime > 100) {
+        sendData.emit({ ...lastSendObj, durationTime });
+      }
+      lastSendObj = {
+        ...sendObj,
+        eventType: "pv_duration",
+      };
+    },
+    title ? 0 : 17
+  );
 }
