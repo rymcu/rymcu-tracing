@@ -29,6 +29,7 @@ export function run(args: RYTracingArguments) {
   initEventBus();
   initSender();
   initPV();
+  _global.__RY_TRACING_INIT__ = true;
 }
 
 _global.__RY_TRACING__.main = run;
