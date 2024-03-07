@@ -1,11 +1,12 @@
-import { Base } from './base'
-import { RYTracingArguments, RYTracingOption } from './option'
+import { Base } from "./base";
+import { EventBus } from "./eventbus";
+import { RYTracingArguments, RYTracingOption } from "./option";
 
 export type RYTracing = {
-  base: Base
-  event: any
-  sender: any
-  interseciton: any
-  options: RYTracingOption
-  main: (args: RYTracingArguments) => void
-}
+  base: Base;
+  eventbus: EventBus;
+  sender: any;
+  interseciton: any;
+  options: RYTracingOption;
+  main: (args: RYTracingArguments) => void;
+};
